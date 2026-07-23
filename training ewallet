@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Kecepatan 8 Angka</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Tes Kecepatan Mengetik 8 Angka</h1>
+
+    <div id="timer">60</div>
+
+    <div id="target"></div>
+
+    <input
+        id="input"
+        maxlength="8"
+        autocomplete="off"
+        autofocus
+        placeholder="Ketik 8 angka">
+
+    <button id="start">Mulai</button>
+
+    <div id="hasil"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+body{
+
+    margin:0;
+    font-family:Arial;
+    background:#202124;
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:100vh;
+
+}
+
+.container{
+
+    width:600px;
+    text-align:center;
+
+}
+
+h1{
+
+    margin-bottom:10px;
+
+}
+
+#timer{
+
+    font-size:40px;
+    color:#00ff88;
+    margin-bottom:20px;
+
+}
+
+#target{
+
+    font-size:48px;
+    font-weight:bold;
+    letter-spacing:8px;
+    margin-bottom:20px;
+
+}
+
+#input{
+
+    width:320px;
+
+    font-size:36px;
+
+    text-align:center;
+
+    padding:10px;
+
+}
+
+button{
+
+    margin-top:20px;
+
+    padding:12px 30px;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+#hasil{
+
+    margin-top:30px;
+
+    font-size:32px;
+
+    min-height:60px;
+
+}
+
+.green{
+
+    color:lime;
+
+}
+
+.red{
+
+    color:red;
+
+}
+
+const target = document.getElementById("target");
+const input = document.getElementById("input");
+const hasil = document.getElementById("hasil");
+const timer = document.getElementById("timer");
+const start = document.getElementById("start");
+
+let angka = "";
+
+let benar = 0;
+let salah = 0;
+let total = 0;
+
+let waktu = 60;
+let interval;
+
+function random8(){
+
+    let s="";
+
+    for(let i=0;i<8;i++){
+
+        s += Math.floor(Math.random()*10);
+
+    }
+
+    return s;
+
+}
+
+function soalBaru(){
+
+    angka=random8();
+
+    target.innerHTML=angka;
+
+    input.value="";
+
+    hasil.innerHTML="";
+
+    input.focus();
+
+}
+
+input.addEventListener("input",()=>{
+
+    let html="";
+
+    let isi=input.value;
+
+    for(let i=0;i<isi.length;i++){
+
+        if(isi[i]==angka[i]){
+
+            html += "<span class='green'>"+isi[i]+"</span>";
+
+        }
+
+        else{
+
+            html += "<span class='red'>"+isi[i]+"</span>";
+
+        }
+
+    }
+
+    hasil.innerHTML=html;
+
+});
+
+input.addEventListener("keydown",(e)=>{
+
+    if(e.key!="Enter") return;
+
+    total++;
+
+    if(input.value===angka){
+
+        benar++;
+
+    }
+
+    else{
+
+        salah++;
+
+    }
+
+    soalBaru();
+
+});
+
+start.onclick=()=>{
+
+    benar=0;
+    salah=0;
+    total=0;
+
+    waktu=60;
+
+    timer.innerHTML=waktu;
+
+    start.disabled=true;
+
+    soalBaru();
+
+    interval=setInterval(()=>{
+
+        waktu--;
+
+        timer.innerHTML=waktu;
+
+        if(waktu<=0){
+
+            clearInterval(interval);
+
+            input.disabled=true;
+
+            target.innerHTML="SELESAI";
+
+            let akurasi=0;
+
+            if(total>0){
+
+                akurasi=(benar/total*100).toFixed(2);
+
+            }
+
+            hasil.innerHTML=
+
+            `
+            <br>
+
+            Total Soal : ${total}<br>
+
+            Benar : ${benar}<br>
+
+            Salah : ${salah}<br>
+
+            Ketepatan : ${akurasi}%<br>
+
+            Kecepatan : ${benar} soal/menit<br>
+
+            Digit Benar : ${benar*8}
+
+            `;
+
+        }
+
+    },1000);
+
+};
