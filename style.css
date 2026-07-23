@@ -5,8 +5,14 @@ body{
     justify-content:center;
     align-items:center;
 
-    background-image:url("wallpaper.jpg");
-    background-size:cover;
+    background:
+    linear-gradient(
+    rgba(15,23,42,.55),
+    rgba(15,23,42,.55)
+    ),
+    url("wallpaper.jpg");
+
+    background-size:100% 100%;
     background-position:center;
     background-repeat:no-repeat;
     background-attachment:fixed;
