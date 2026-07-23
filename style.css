@@ -5,10 +5,15 @@ body{
     justify-content:center;
     align-items:center;
 
-    background:linear-gradient(135deg,#0f172a,#1e3a8a,#111827);
+    background-image:url("wallpaper.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
 
     font-family:Segoe UI,Arial,sans-serif;
 }
+
 
 
 .container{
