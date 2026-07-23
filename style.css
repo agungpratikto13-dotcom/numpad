@@ -190,3 +190,16 @@ color:#ef4444;
 
     font-size:24px;
 }
+
+.credit{
+    margin-top:35px;
+
+    font-size:16px;
+    font-weight:600;
+
+    color:#38bdf8;
+
+    text-shadow:0 0 10px rgba(56,189,248,.5);
+
+    letter-spacing:3px;
+}
